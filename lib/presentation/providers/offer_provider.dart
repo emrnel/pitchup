@@ -1,3 +1,4 @@
+// lib/presentation/providers/offer_provider.dart
 import 'package:flutter/foundation.dart';
 import '../../data/models/offer_model.dart';
 import '../../data/models/user_model.dart';

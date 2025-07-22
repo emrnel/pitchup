@@ -1,3 +1,4 @@
+// lib/presentation/animations/shake_animation.dart
 import 'package:flutter/material.dart';
 
 class ShakeAnimation extends StatefulWidget {

@@ -1,3 +1,4 @@
+// lib/core/constants/firebase_constants.dart
 class FirebaseConstants {
 // Collections
   static const String usersCollection = 'users';

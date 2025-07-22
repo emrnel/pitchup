@@ -1,3 +1,4 @@
+// lib/data/models/video_model.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum VideoStatus { pending, approved, rejected }

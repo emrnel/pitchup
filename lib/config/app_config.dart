@@ -1,3 +1,4 @@
+// lib/config/app_config.dart
 class AppConfig {
   static const String appName = 'PitchUp';
   static const String appVersion = '1.0.0';

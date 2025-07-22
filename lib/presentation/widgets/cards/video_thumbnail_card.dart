@@ -1,3 +1,4 @@
+// lib/presentation/widgets/cards/video_thumbnail_card.dart
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';

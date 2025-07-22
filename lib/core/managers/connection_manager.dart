@@ -1,3 +1,4 @@
+// lib/core/managers/connection_manager.dart
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';

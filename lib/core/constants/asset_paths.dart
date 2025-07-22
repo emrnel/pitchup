@@ -1,3 +1,4 @@
+// lib/core/constants/asset_paths.dart
 class AssetPaths {
 // Images
   static const String logo = 'assets/images/logo.png';

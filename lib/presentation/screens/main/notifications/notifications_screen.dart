@@ -1,3 +1,4 @@
+// lib/presentation/screens/main/notifications/notifications_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_colors.dart';

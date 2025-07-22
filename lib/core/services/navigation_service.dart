@@ -1,3 +1,4 @@
+// lib/core/services/navigation_service.dart
 import 'package:flutter/material.dart';
 import '../../presentation/screens/main/discover/video_detail_screen.dart';
 import '../../presentation/screens/main/offers/offer_detail_screen.dart';

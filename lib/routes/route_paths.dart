@@ -1,3 +1,4 @@
+// lib/routes/route_paths.dart
 class AppRoutePath {
   final String location;
   final String? id;

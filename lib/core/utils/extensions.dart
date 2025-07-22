@@ -1,3 +1,4 @@
+// lib/core/utils/extensions.dart
 import 'package:flutter/material.dart';
 
 extension StringExtensions on String {

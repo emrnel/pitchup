@@ -1,3 +1,4 @@
+// lib/core/theme/app_dimensions.dart
 class AppDimensions {
 // Spacing
   static const double space4 = 4.0;

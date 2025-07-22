@@ -1,3 +1,4 @@
+// lib/data/models/offer_model.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum OfferStatus { pending, accepted, rejected }

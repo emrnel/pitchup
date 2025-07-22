@@ -1,3 +1,4 @@
+// lib/data/repositories/offer_repository.dart
 import '../models/offer_model.dart';
 import '../services/firestore_service.dart';
 import '../services/notification_service.dart';

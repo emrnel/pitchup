@@ -1,3 +1,4 @@
+// lib/core/managers/video_preload_manager.dart
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import '../../data/models/video_model.dart';

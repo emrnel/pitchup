@@ -1,3 +1,4 @@
+// lib/presentation/screens/main/offers/offer_detail_screen.dart
 import 'package:flutter/material.dart';
 
 class OfferDetailScreen extends StatelessWidget {

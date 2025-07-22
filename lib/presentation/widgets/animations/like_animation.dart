@@ -1,3 +1,4 @@
+// lib/presentation/widgets/animations/like_animation.dart
 import 'package:flutter/material.dart';
 
 class LikeAnimation extends StatefulWidget {

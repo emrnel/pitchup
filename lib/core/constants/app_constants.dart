@@ -1,3 +1,4 @@
+// lib/core/constants/app_constants.dart
 class AppConstants {
   // User Roles
   static const String roleInvestor = 'investor';

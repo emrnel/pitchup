@@ -1,3 +1,4 @@
+// lib/presentation/widgets/animations/shake_animation.dart
 import 'dart:math';
 import 'package:flutter/material.dart';
 

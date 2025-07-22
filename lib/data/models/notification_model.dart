@@ -1,3 +1,4 @@
+// lib/data/models/notification_model.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum NotificationType {
