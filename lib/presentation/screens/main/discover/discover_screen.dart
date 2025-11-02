@@ -54,6 +54,11 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             return const Center(child: LoadingIndicator());
           }
 
+          // Show different content for entrepreneurs
+          if (user.role == UserRole.entrepreneur) {
+            return _buildEntrepreneurView();
+          }
+
           if (videoProvider.isLoading && videoProvider.videos.isEmpty) {
             return const Center(child: LoadingIndicator());
           }
@@ -324,6 +329,133 @@ class _DiscoverScreenState extends State<DiscoverScreen>
       ),
       onTap: onTap,
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+    );
+  }
+
+  Widget _buildEntrepreneurView() {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Icon
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.lightbulb_outline,
+                    size: 60,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+                const SizedBox(height: 32),
+
+                // Title
+                Text(
+                  'Girişimci Panosu',
+                  style: AppTypography.h2.copyWith(
+                    color: AppColors.textPrimary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+
+                // Description
+                Text(
+                  'Bu alan yatırımcıların projelerinizi keşfetmesi için tasarlanmıştır.',
+                  style: AppTypography.bodyLargeText.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+
+                // Info cards
+                _buildInfoCard(
+                  icon: Icons.video_library,
+                  title: 'Videolarınızı Yükleyin',
+                  description: 'Projenizi tanıtan 60 saniyelik pitch videolarını yükleyin.',
+                ),
+                const SizedBox(height: 16),
+                _buildInfoCard(
+                  icon: Icons.business_center,
+                  title: 'Teklifleri Bekleyin',
+                  description: 'Yatırımcılar videolarınızı görüntüleyip teklif gönderecek.',
+                ),
+                const SizedBox(height: 16),
+                _buildInfoCard(
+                  icon: Icons.notifications_active,
+                  title: 'Bildirimleri Takip Edin',
+                  description: 'Gelen tekliflerden anında haberdar olun.',
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard({
+    required IconData icon,
+    required String title,
+    required String description,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceColor,
+        borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
+        border: Border.all(color: AppColors.dividerColor),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              icon,
+              color: AppColors.primaryColor,
+              size: 24,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTypography.bodyLargeText.copyWith(
+                    fontWeight: AppTypography.fontMedium,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: AppTypography.bodySmallText.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
