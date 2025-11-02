@@ -42,6 +42,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   Timer? _overlayTimer;
   Timer? _progressTimer;
   double _progress = 0.0;
+  bool _isPreloadedController = false; // Track if controller is from preload manager
 
   @override
   void initState() {
@@ -68,7 +69,17 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   void dispose() {
     _overlayTimer?.cancel();
     _progressTimer?.cancel();
-    _controller?.dispose();
+
+    // Only dispose controller if we created it ourselves (not from preload manager)
+    // VideoPreloadManager manages its own controller lifecycle
+    if (_controller != null && !_isPreloadedController) {
+      _controller!.removeListener(_videoListener);
+      _controller!.dispose();
+    } else if (_controller != null) {
+      // Just remove listener for preloaded controllers
+      _controller!.removeListener(_videoListener);
+    }
+
     super.dispose();
   }
 
@@ -82,6 +93,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         _controller =
             await VideoPreloadManager().getOrCreateController(widget.video);
       }
+
+      // Mark as preloaded since it came from VideoPreloadManager
+      // VideoPreloadManager will handle disposal
+      _isPreloadedController = true;
 
       if (_controller != null && mounted) {
         _controller!.addListener(_videoListener);

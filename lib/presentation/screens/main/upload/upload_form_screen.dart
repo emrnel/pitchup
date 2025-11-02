@@ -120,17 +120,15 @@ class _UploadFormScreenState extends State<UploadFormScreen> {
                 children: [
                   // Video preview
                   if (_videoController?.value.isInitialized == true) ...[
-                    Container(
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(AppDimensions.radiusMedium),
-                        color: Colors.black,
-                      ),
-                      child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(AppDimensions.radiusMedium),
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(AppDimensions.radiusMedium),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(AppDimensions.radiusMedium),
+                          color: Colors.black,
+                        ),
                         child: AspectRatio(
                           aspectRatio: _videoController!.value.aspectRatio,
                           child: VideoPlayer(_videoController!),
