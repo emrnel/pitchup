@@ -31,6 +31,31 @@ class PermissionManager {
       return await requestPhotosPermission();
     }
 
+    // Android 13+ (API 33+) uses granular media permissions
+    if (Platform.isAndroid) {
+      // Request both video and images permissions for Android 13+
+      final videoStatus = await Permission.videos.status;
+      final imagesStatus = await Permission.photos.status;
+
+      if (videoStatus.isDenied || imagesStatus.isDenied) {
+        final results = await [
+          Permission.videos,
+          Permission.photos,
+        ].request();
+
+        return results[Permission.videos]?.isGranted ?? false;
+      } else if (videoStatus.isPermanentlyDenied || imagesStatus.isPermanentlyDenied) {
+        await _showPermissionDialog(
+          'Medya İzni',
+          'Galeriden video seçmek için medya erişim izni gerekiyor. Lütfen ayarlardan izin verin.',
+        );
+        return false;
+      }
+
+      return videoStatus.isGranted;
+    }
+
+    // Fallback for older Android versions
     final status = await Permission.storage.status;
 
     if (status.isDenied) {
@@ -97,13 +122,37 @@ class PermissionManager {
 
   // Request multiple permissions
   static Future<bool> requestVideoPermissions() async {
-    final statuses = await [
+    List<Permission> permissions = [
       Permission.camera,
       Permission.microphone,
-      Platform.isIOS ? Permission.photos : Permission.storage,
-    ].request();
+    ];
 
-    return statuses.values.every((status) => status.isGranted);
+    // Add platform-specific media permissions
+    if (Platform.isIOS) {
+      permissions.add(Permission.photos);
+    } else if (Platform.isAndroid) {
+      // For Android 13+, use granular media permissions
+      permissions.add(Permission.videos);
+      permissions.add(Permission.photos);
+    }
+
+    final statuses = await permissions.request();
+
+    // Check if all required permissions are granted
+    bool allGranted = statuses.values.every((status) => status.isGranted);
+
+    if (!allGranted) {
+      // Show dialog if any permission is permanently denied
+      bool anyPermanentlyDenied = statuses.values.any((status) => status.isPermanentlyDenied);
+      if (anyPermanentlyDenied) {
+        await _showPermissionDialog(
+          'İzinler Gerekli',
+          'Video çekmek için gerekli izinler verilmedi. Lütfen ayarlardan izinleri aktif edin.',
+        );
+      }
+    }
+
+    return allGranted;
   }
 
   // Check permission status

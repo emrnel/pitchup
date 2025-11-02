@@ -45,5 +45,13 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Pitch videonuzu çekmek için kamera erişimine ihtiyacımız var.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Pitch videonuzda ses kaydı yapabilmek için mikrofon erişimine ihtiyacımız var.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Galeriden video seçebilmeniz için fotoğraf kütüphanesi erişimine ihtiyacımız var.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Video kaydetmek için fotoğraf kütüphanesi erişimine ihtiyacımız var.</string>
 </dict>
 </plist>
