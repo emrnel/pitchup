@@ -113,7 +113,9 @@ class AnalyticsManager {
   }) async {
     await _analytics.logEvent(
       name: name,
-      parameters: parameters,
+      // Hata düzeltmesi: Map'i <String, Object> tipine çevir
+      parameters:
+          parameters?.map((key, value) => MapEntry(key, value as Object)),
     );
   }
 }
