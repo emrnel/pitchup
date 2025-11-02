@@ -104,13 +104,19 @@ class _AuthScreenState extends State<AuthScreen>
                           ),
                           child: TabBar(
                             controller: _tabController,
-                            indicator: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(
-                                  AppDimensions.radiusXLarge),
+                            // HATA DÜZELTME: Yuvarlak gösterge (BoxDecoration) yerine
+                            // alt çizgi (UnderlineTabIndicator) kullanıldı.
+                            indicator: const UnderlineTabIndicator(
+                              borderSide: BorderSide(
+                                color: AppColors.primaryColor,
+                                width: 3.0, // Çizgi kalınlığı
+                              ),
+                              // insets: EdgeInsets.symmetric(horizontal: 16.0), // Gerekirse çizgi uzunluğunu ayarlar
                             ),
-                            labelColor: Colors.white,
-                            unselectedLabelColor: AppColors.textSecondary,
+                            labelColor:
+                                AppColors.primaryColor, // Seçili metin rengi
+                            unselectedLabelColor: AppColors
+                                .textSecondary, // Seçili olmayan metin rengi
                             labelStyle: AppTypography.bodyLargeText.copyWith(
                               fontWeight: AppTypography.fontMedium,
                             ),

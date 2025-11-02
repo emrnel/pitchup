@@ -212,15 +212,16 @@ class _UploadScreenState extends State<UploadScreen>
   }
 
   Future<void> _handleCameraRecord() async {
-    // Check permissions
+    // DÜZELTME: İzin kontrolü eklendi
     final hasPermissions = await PermissionManager.requestVideoPermissions();
-    if (!hasPermissions) {
+    if (!hasPermissions && mounted) {
       context.showSnackBar(
         'Video çekmek için kamera ve mikrofon izni gerekiyor',
         isError: true,
       );
       return;
     }
+    // -- Düzeltme sonu --
 
     try {
       final ImagePicker picker = ImagePicker();
@@ -228,29 +229,31 @@ class _UploadScreenState extends State<UploadScreen>
         source: ImageSource.camera,
         maxDuration: const Duration(seconds: 60),
       );
-
       if (video != null) {
-        // Navigate to upload form with video
         _navigateToUploadForm(video);
       }
     } catch (e) {
-      context.showSnackBar(
-        'Video kaydedilirken bir hata oluştu',
-        isError: true,
-      );
+      if (mounted) {
+        // mounted kontrolü eklendi
+        context.showSnackBar(
+          'Video kaydedilirken bir hata oluştu',
+          isError: true,
+        );
+      }
     }
   }
 
   Future<void> _handleGalleryPick() async {
-    // Check permissions
+    // DÜZELTME: İzin kontrolü eklendi
     final hasPermissions = await PermissionManager.requestStoragePermission();
-    if (!hasPermissions) {
+    if (!hasPermissions && mounted) {
       context.showSnackBar(
         'Galeriye erişim için izin gerekiyor',
         isError: true,
       );
       return;
     }
+    // -- Düzeltme sonu --
 
     try {
       final ImagePicker picker = ImagePicker();
@@ -258,16 +261,17 @@ class _UploadScreenState extends State<UploadScreen>
         source: ImageSource.gallery,
         maxDuration: const Duration(seconds: 60),
       );
-
       if (video != null) {
-        // Navigate to upload form with video
         _navigateToUploadForm(video);
       }
     } catch (e) {
-      context.showSnackBar(
-        'Video seçilirken bir hata oluştu',
-        isError: true,
-      );
+      if (mounted) {
+        // mounted kontrolü eklendi
+        context.showSnackBar(
+          'Video seçilirken bir hata oluştu',
+          isError: true,
+        );
+      }
     }
   }
 

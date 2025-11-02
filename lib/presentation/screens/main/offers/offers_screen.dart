@@ -97,12 +97,13 @@ class _OffersScreenState extends State<OffersScreen>
                     ),
                     child: TabBar(
                       controller: _tabController,
-                      indicator: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius:
-                            BorderRadius.circular(AppDimensions.radiusXLarge),
+                      indicator: const UnderlineTabIndicator(
+                        borderSide: BorderSide(
+                          color: AppColors.primaryColor,
+                          width: 3.0,
+                        ),
                       ),
-                      labelColor: Colors.white,
+                      labelColor: AppColors.primaryColor, // Seçili metin rengi
                       unselectedLabelColor: AppColors.textSecondary,
                       labelStyle: AppTypography.bodyMediumText.copyWith(
                         fontWeight: AppTypography.fontMedium,
