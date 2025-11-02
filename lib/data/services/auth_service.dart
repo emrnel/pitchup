@@ -35,7 +35,8 @@ class AuthService {
   }
 
   static Future<void> updateEmail(String newEmail) async {
-    await currentUser?.updateEmail(newEmail);
+    // Hata düzeltmesi: API değişti
+    await currentUser?.verifyBeforeUpdateEmail(newEmail);
   }
 
   static Future<void> deleteAccount() async {
