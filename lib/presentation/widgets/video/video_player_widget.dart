@@ -37,7 +37,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   bool _isPlaying = false;
   bool _isMuted = false;
   bool _showOverlay = true;
-  bool _showDetails = false;
   bool _isLikeAnimating = false;
   Timer? _overlayTimer;
   Timer? _progressTimer;
@@ -216,12 +215,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         _controller!.setVolume(_isMuted ? 0 : 1);
       });
     }
-  }
-
-  void _toggleDetails() {
-    setState(() {
-      _showDetails = !_showDetails;
-    });
   }
 
   void _handleLike() {
@@ -419,15 +412,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   _handleLike,
                 ),
                 const SizedBox(height: 16),
-                _buildActionButton(
-                  Icons.info_outline,
-                  '',
-                  () {
-                    _toggleDetails();
-                    widget.onInfo();
-                  },
-                ),
-                const SizedBox(height: 16),
                 if (widget.onOffer != null)
                   _buildActionButton(
                     Icons.business_center_outlined,
@@ -441,94 +425,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   widget.onShare,
                 ),
               ],
-            ),
-          ),
-
-          // Bottom details section
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            bottom: _showDetails ? 0 : -200,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 200,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.9),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(AppDimensions.radiusLarge),
-                  topRight: Radius.circular(AppDimensions.radiusLarge),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Drag handle
-                  Center(
-                    child: Container(
-                      width: 32,
-                      height: 4,
-                      margin: const EdgeInsets.only(bottom: 16),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                  ),
-                  // Title
-                  Text(
-                    'Proje Özeti',
-                    style: AppTypography.h4.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  // Description
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Text(
-                        widget.video.description,
-                        style: AppTypography.bodyMediumText.copyWith(
-                          color: Colors.white.withOpacity(0.8),
-                          height: 1.5,
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Metadata
-                  if (widget.video.metadata.requestedAmount != null) ...[
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        _buildMetadataItem(
-                          'Talep Edilen',
-                          Formatters.currency(
-                              widget.video.metadata.requestedAmount!),
-                        ),
-                        const SizedBox(width: 16),
-                        if (widget.video.metadata.equityOffered != null)
-                          _buildMetadataItem(
-                            'Hisse',
-                            '${widget.video.metadata.equityOffered!}%',
-                          ),
-                      ],
-                    ),
-                  ],
-                  // Close button
-                  Center(
-                    child: TextButton(
-                      onPressed: _toggleDetails,
-                      child: Text(
-                        'Kapat',
-                        style: AppTypography.bodyMediumText.copyWith(
-                          color: AppColors.primaryLight,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
 
@@ -608,27 +504,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           value,
           style: AppTypography.captionText.copyWith(
             color: Colors.white.withOpacity(0.8),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMetadataItem(String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: AppTypography.captionText.copyWith(
-            color: Colors.white.withOpacity(0.6),
-          ),
-        ),
-        Text(
-          value,
-          style: AppTypography.bodySmallText.copyWith(
-            color: Colors.white,
-            fontWeight: AppTypography.fontMedium,
           ),
         ),
       ],
