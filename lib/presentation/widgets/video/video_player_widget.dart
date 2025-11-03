@@ -262,10 +262,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         children: [
           // Video
           Center(
-            child: AspectRatio(
-              aspectRatio: _controller!.value.aspectRatio,
-              child: VideoPlayer(_controller!),
-            ),
+            child: _buildVideoWithRotation(),
           ),
 
           // Gradient overlays
@@ -513,6 +510,40 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildVideoWithRotation() {
+    final aspectRatio = _controller!.value.aspectRatio;
+    final size = _controller!.value.size;
+
+    // If aspect ratio is landscape (> 1) but the video is actually portrait
+    // (happens with camera videos that lose rotation metadata)
+    // We need to check if rotation is needed
+    final isLandscape = aspectRatio > 1.0;
+
+    // For camera-recorded videos that appear horizontal but should be vertical
+    // We can detect this by checking if width > height but expecting portrait video
+    if (isLandscape && size.width > size.height) {
+      // Video appears to be landscape, might need rotation
+      // Check if this is likely a rotated portrait video
+      final shouldRotate = aspectRatio > 1.2 && aspectRatio < 2.0; // Likely 16:9 rotated
+
+      if (shouldRotate) {
+        return AspectRatio(
+          aspectRatio: 1 / aspectRatio, // Swap aspect ratio for portrait
+          child: RotatedBox(
+            quarterTurns: 1, // Rotate 90 degrees
+            child: VideoPlayer(_controller!),
+          ),
+        );
+      }
+    }
+
+    // Normal video display
+    return AspectRatio(
+      aspectRatio: aspectRatio,
+      child: VideoPlayer(_controller!),
     );
   }
 }
