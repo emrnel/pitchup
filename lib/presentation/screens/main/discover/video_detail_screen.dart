@@ -16,6 +16,7 @@ import '../../../widgets/common/primary_button.dart';
 import '../../../../data/repositories/user_repository.dart';
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/services/share_service.dart';
+import '../../../../core/managers/video_preload_manager.dart';
 
 class VideoDetailScreen extends StatefulWidget {
   final String videoId;
@@ -41,6 +42,13 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
   void initState() {
     super.initState();
     _loadVideoDetails();
+  }
+
+  @override
+  void dispose() {
+    // Pause all videos to stop audio when leaving screen
+    VideoPreloadManager().pauseAll();
+    super.dispose();
   }
 
   Future<void> _loadVideoDetails() async {
@@ -137,9 +145,11 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
 
                         // Bottom sheet with details
                         DraggableScrollableSheet(
-                          initialChildSize: 0.1,
-                          minChildSize: 0.1,
+                          initialChildSize: 0.08,
+                          minChildSize: 0.08,
                           maxChildSize: 0.8,
+                          snap: true,
+                          snapSizes: const [0.08, 0.4, 0.8],
                           builder: (context, scrollController) {
                             return Container(
                               decoration: const BoxDecoration(
@@ -153,15 +163,18 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                               ),
                               child: Column(
                                 children: [
-                                  // Drag handle
+                                  // Larger drag area for better UX
                                   Container(
-                                    width: 32,
-                                    height: 4,
-                                    margin:
-                                        const EdgeInsets.symmetric(vertical: 8),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.dividerColor,
-                                      borderRadius: BorderRadius.circular(2),
+                                    height: 32,
+                                    width: double.infinity,
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      width: 48,
+                                      height: 4,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.textTertiary,
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
                                     ),
                                   ),
 

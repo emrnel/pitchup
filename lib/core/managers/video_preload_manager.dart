@@ -107,8 +107,9 @@ class VideoPreloadManager {
         initializationTime: DateTime.now(),
       );
 
-      // Set to muted by default (user can unmute)
-      await controller.setVolume(0);
+      // Don't mute - let VideoPlayerWidget handle volume
+      // User preference should be managed by the player widget
+      // await controller.setVolume(0);  // REMOVED - caused audio issues
 
       _totalPreloaded++;
       debugPrint('✅ Preloaded video: ${video.title} (${video.id})');
@@ -247,7 +248,8 @@ class VideoPreloadManager {
       );
 
       await controller.initialize();
-      await controller.setVolume(0);
+      // Don't mute - let VideoPlayerWidget handle volume
+      // await controller.setVolume(0);  // REMOVED - caused audio issues
 
       _controllerStates[video.id] = _controllerStates[video.id]!.copyWith(
         isInitialized: true,

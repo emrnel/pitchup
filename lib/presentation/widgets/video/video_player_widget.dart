@@ -278,12 +278,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.black.withOpacity(0.6),
+                    Colors.black.withOpacity(0.7),
                     Colors.transparent,
                     Colors.transparent,
-                    Colors.black.withOpacity(0.8),
+                    Colors.black.withOpacity(0.7),
                   ],
-                  stops: const [0.0, 0.2, 0.8, 1.0],
+                  stops: const [0.0, 0.15, 0.85, 1.0],
                 ),
               ),
             ),
@@ -410,6 +410,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   Icons.favorite_outline,
                   widget.video.likeCount.toString(),
                   _handleLike,
+                ),
+                const SizedBox(height: 16),
+                _buildActionButton(
+                  Icons.info_outline,
+                  '',
+                  widget.onInfo,
                 ),
                 const SizedBox(height: 16),
                 if (widget.onOffer != null)
