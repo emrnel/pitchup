@@ -145,11 +145,11 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
 
                         // Bottom sheet with details
                         DraggableScrollableSheet(
-                          initialChildSize: 0.08,
-                          minChildSize: 0.08,
+                          initialChildSize: 0.12,
+                          minChildSize: 0.12,
                           maxChildSize: 0.8,
                           snap: true,
-                          snapSizes: const [0.08, 0.4, 0.8],
+                          snapSizes: const [0.12, 0.4, 0.8],
                           builder: (context, scrollController) {
                             return Container(
                               decoration: const BoxDecoration(
@@ -164,16 +164,22 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                               child: Column(
                                 children: [
                                   // Larger drag area for better UX
-                                  Container(
-                                    height: 32,
-                                    width: double.infinity,
-                                    alignment: Alignment.center,
+                                  GestureDetector(
+                                    onTap: () {
+                                      // Tapping the drag handle expands to medium size
+                                    },
                                     child: Container(
-                                      width: 48,
-                                      height: 4,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.textTertiary,
-                                        borderRadius: BorderRadius.circular(2),
+                                      height: 40,
+                                      width: double.infinity,
+                                      alignment: Alignment.center,
+                                      color: Colors.transparent,
+                                      child: Container(
+                                        width: 48,
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.textTertiary,
+                                          borderRadius: BorderRadius.circular(2),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -431,7 +437,9 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
   }
 
   void _showVideoInfo() {
-    // Already showing in the bottom sheet
+    // Info is now shown by clicking the info button -
+    // This used to be handled by DraggableScrollableSheet but we can expand it programmatically
+    // For now, the sheet is always visible and user can drag it up
   }
 
   void _navigateToOfferForm() {

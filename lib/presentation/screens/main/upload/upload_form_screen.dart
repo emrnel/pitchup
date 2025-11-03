@@ -134,10 +134,7 @@ class _UploadFormScreenState extends State<UploadFormScreen> {
                         child: ClipRRect(
                           borderRadius:
                               BorderRadius.circular(AppDimensions.radiusMedium),
-                          child: AspectRatio(
-                            aspectRatio: _videoController!.value.aspectRatio,
-                            child: VideoPlayer(_videoController!),
-                          ),
+                          child: _buildVideoPreviewWithRotation(),
                         ),
                       ),
                     ),
@@ -452,5 +449,37 @@ class _UploadFormScreenState extends State<UploadFormScreen> {
         _isUploading = false;
       });
     }
+  }
+
+  Widget _buildVideoPreviewWithRotation() {
+    final aspectRatio = _videoController!.value.aspectRatio;
+    final size = _videoController!.value.size;
+
+    // If aspect ratio is landscape (> 1) but the video is actually portrait
+    // (happens with camera videos that lose rotation metadata)
+    final isLandscape = aspectRatio > 1.0;
+
+    // For camera-recorded videos that appear horizontal but should be vertical
+    if (isLandscape && size.width > size.height) {
+      // Video appears to be landscape, might need rotation
+      // Check if this is likely a rotated portrait video
+      final shouldRotate = aspectRatio > 1.2 && aspectRatio < 2.0; // Likely 16:9 rotated
+
+      if (shouldRotate) {
+        return AspectRatio(
+          aspectRatio: 1 / aspectRatio, // Swap aspect ratio for portrait
+          child: RotatedBox(
+            quarterTurns: 1, // Rotate 90 degrees
+            child: VideoPlayer(_videoController!),
+          ),
+        );
+      }
+    }
+
+    // Normal video display
+    return AspectRatio(
+      aspectRatio: aspectRatio,
+      child: VideoPlayer(_videoController!),
+    );
   }
 }
