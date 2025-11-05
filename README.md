@@ -17,10 +17,6 @@ A video-first mobile platform connecting startups with investors. Built with Flu
 
 `Flutter` `Firebase` `Dart` `Cloud Functions`
 
-## About
-
-Developed as an MVP during a freelance contract (Aug-Sep 2024), managing the complete development cycle from wireframe design to near-production stage.
-
 ---
 
 **Portfolio Project** - Some configurations excluded for confidentiality
